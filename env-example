@@ -7,8 +7,11 @@
 # Point to the path of your applications code on your host
 APP_CODE_PATH_HOST=../
 
-# Point to where the `APP_CODE_PATH_HOST` should be in the container. You may add flags to the path `:cached`, `:delegated`. When using Docker Sync add `:nocopy`
-APP_CODE_PATH_CONTAINER=/var/www:cached
+# Point to where the `APP_CODE_PATH_HOST` should be in the container
+APP_CODE_PATH_CONTAINER=/var/www
+
+# You may add flags to the path `:cached`, `:delegated`. When using Docker Sync add `:nocopy`
+APP_CODE_CONTAINER_FLAG=:cached
 
 # Choose storage path on your machine. For all storage systems
 DATA_PATH_HOST=~/.laradock/data
@@ -104,6 +107,7 @@ WORKSPACE_INSTALL_MSSQL=false
 WORKSPACE_INSTALL_DRUSH=false
 WORKSPACE_DRUSH_VERSION=8.1.17
 WORKSPACE_INSTALL_DRUPAL_CONSOLE=false
+WORKSPACE_INSTALL_WP_CLI=false
 WORKSPACE_INSTALL_AEROSPIKE=false
 WORKSPACE_INSTALL_V8JS=false
 WORKSPACE_INSTALL_LARAVEL_ENVOY=false
@@ -173,6 +177,8 @@ PHP_WORKER_INSTALL_BCMATH=false
 PHP_WORKER_INSTALL_PHALCON=false
 PHP_WORKER_INSTALL_SOAP=false
 PHP_WORKER_INSTALL_ZIP_ARCHIVE=false
+PHP_WORKER_INSTALL_MYSQL_CLIENT=false
+PHP_WORKER_INSTALL_AMQP=false
 PHP_WORKER_PUID=1000
 PHP_WORKER_PGID=1000
 
@@ -498,14 +504,25 @@ SOLR_DATAIMPORTHANDLER_MYSQL=false
 SOLR_DATAIMPORTHANDLER_MSSQL=false
 
 ### GITLAB ###############################################
+GITLAB_POSTGRES_INIT=true
 GITLAB_HOST_HTTP_PORT=8989
 GITLAB_HOST_HTTPS_PORT=9898
 GITLAB_HOST_SSH_PORT=2289
 GITLAB_DOMAIN_NAME=http://localhost
 GITLAB_ROOT_PASSWORD=laradock
 GITLAB_HOST_LOG_PATH=./logs/gitlab
+GITLAB_POSTGRES_HOST=postgres
+GITLAB_POSTGRES_USER=laradock_gitlab
+GITLAB_POSTGRES_PASSWORD=laradock_gitlab
+GITLAB_POSTGRES_DB=laradock_gitlab
+
+### GITLAB-RUNNER ###############################################
+GITLAB_CI_SERVER_URL=http://localhost:8989
+GITLAB_RUNNER_REGISTRATION_TOKEN=<my-registration-token>
+GITLAB_REGISTER_NON_INTERACTIVE=true
 
 ### JUPYTERHUB ###############################################
+JUPYTERHUB_POSTGRES_INIT=true
 JUPYTERHUB_POSTGRES_HOST=postgres
 JUPYTERHUB_POSTGRES_USER=laradock_jupyterhub
 JUPYTERHUB_POSTGRES_PASSWORD=laradock_jupyterhub
@@ -514,10 +531,10 @@ JUPYTERHUB_PORT=9991
 JUPYTERHUB_OAUTH_CALLBACK_URL=http://laradock:9991/hub/oauth_callback
 JUPYTERHUB_OAUTH_CLIENT_ID={GITHUB_CLIENT_ID}
 JUPYTERHUB_OAUTH_CLIENT_SECRET={GITHUB_CLIENT_SECRET}
-JUPYTERHUB_LOCAL_NOTEBOOK_IMAGE=laradock_jupyterhub-user
 JUPYTERHUB_CUSTOM_CONFIG=./jupyterhub/jupyterhub_config.py
 JUPYTERHUB_USER_DATA=/jupyterhub
 JUPYTERHUB_USER_LIST=./jupyterhub/userlist
+JUPYTERHUB_ENABLE_NVIDIA=false
 
 ### IPYTHON ##################################################
 LARADOCK_IPYTHON_CONTROLLER_IP=127.0.0.1
@@ -525,7 +542,7 @@ LARADOCK_IPYTHON_CONTROLLER_IP=127.0.0.1
 ### NETDATA ###############################################
 NETDATA_PORT=19999
 
-### PHPREDISADMIN #########################################
+### REDISWEBUI #########################################
 REDIS_WEBUI_USERNAME=laradock
 REDIS_WEBUI_PASSWORD=laradock
 REDIS_WEBUI_CONNECT_HOST=redis
@@ -621,6 +638,17 @@ MAILU_WEBMAIL=rainloop
 # Dav server implementation (value: radicale, none)
 MAILU_WEBDAV=radicale
 
+
+### TRAEFIK #################################################
+
+TRAEFIK_HOST_HTTP_PORT=80
+TRAEFIK_HOST_HTTPS_PORT=443
+
+
 ### MOSQUITTO #################################################
 
 MOSQUITTO_PORT=9001
+
+### COUCHDB ###################################################
+
+COUCHDB_PORT=5984
